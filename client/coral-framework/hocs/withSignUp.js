@@ -81,6 +81,8 @@ const withSignUp = hoistStatics(WrappedComponent => {
         headers: { 'X-Pym-Url': redirectUri },
       };
 
+      this.setState({ loading: true });
+
       rest('/users', params)
         .then(() => {
           this.setState({ success: true, loading: false, error: null });

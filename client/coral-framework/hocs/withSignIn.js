@@ -45,6 +45,8 @@ export default hoistStatics(WrappedComponent => {
         };
       }
 
+      this.setState({ loading: true });
+
       rest('/auth/local', params)
         .then(({ user, token }) => {
           this.setState({ success: true, loading: false, error: null });
