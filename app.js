@@ -12,12 +12,24 @@ const { MOUNT_PATH } = require('./url');
 const routes = require('./routes');
 const debug = require('debug')('talk:app');
 const { ENABLE_TRACING, APOLLO_ENGINE_KEY, PORT } = require('./config');
+const cors = require('cors');
 
 const app = express();
 
 // Add the trace middleware first, it will create a request ID for each request
 // downstream.
 app.use(trace);
+
+// Enable CORS for url
+if (process.env.TALK_CORS_URL) {
+  app.use(
+    cors({
+      origin: process.env.TALK_CORS_URL,
+      credentials: true,
+      optionsSuccessStatus: 200,
+    })
+  );
+}
 
 //==============================================================================
 // PLUGIN PRE APPLICATION MIDDLEWARE
